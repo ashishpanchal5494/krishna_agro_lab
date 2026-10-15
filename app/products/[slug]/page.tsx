@@ -280,13 +280,14 @@ This premium spawn has been selected for its exceptional yield potential and abi
 };
 
 interface ProductPageProps {
-  params: {
+  params: Promise<{
     slug: string;
-  };
+  }>;
 }
 
-export default function ProductPage({ params }: ProductPageProps) {
-  const product = products[params.slug as keyof typeof products];
+export default async function ProductPage({ params }: ProductPageProps) {
+  const { slug } = await params;
+  const product = products[slug as keyof typeof products];
 
   if (!product) {
     notFound();
